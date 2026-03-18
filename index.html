@@ -4,36 +4,35 @@
 <meta charset="UTF-8">
 <title>مغامرة الضرب في ثلاثة</title>
 <style>
-body {font-family: Arial, sans-serif; background: linear-gradient(#٨٧ceeb, #e٠ffff); margin: ٠; padding: ٢٠px; color: #٠٠٣٣٠٠; text-align: center;}
-h1 {color: #٠٠٨٠٠٠; font-size: ٤٠px;}
-h2 {color: #d٢٦٩١e; font-size: ٣٠px;}
-.door {background: #ffdd٥٥; border: ٥px solid #ff٨٠٠٠; border-radius: ٢٠px; padding: ٢٠px; margin: ١٥px; font-size: ٢٥px; cursor: pointer; display: inline-block; width: ٢٨٠px;}
-.door:hover {transform: scale(١.١); background: #ffd٧٠٠;}
-.level {display: none; background: white; border-radius: ٢٠px; padding: ٣٠px; margin: ٢٠px auto; max-width: ٨٠٠px; box-shadow: ٠ ١٠px ٣٠px rgba(٠,٠,٠,٠.١);}
-button {background: #٣٢cd٣٢; color: white; border: none; padding: ١٥px ٣٠px; font-size: ٢٢px; border-radius: ١٥px; margin: ١٠px; cursor: pointer;}
-.circle {width: ٥٠px; height: ٥٠px; background: red; border-radius: ٥٠%; display: inline-block; margin: ٨px; animation: pop ٠.٤s;}
-@keyframes pop {from {transform: scale(٠);} to {transform: scale(١);}}
-.star {font-size: ٥٠px; color: gold; animation: twinkle ٠.٨s infinite;}
-@keyframes twinkle {٠%,١٠٠% {opacity: ١;} ٥٠% {opacity: ٠.٣;}}
-#score {font-size: ٣٠px; color: #d٢٦٩١e; margin: ١٥px;}
-#progress {height: ٢٠px; background: #٣٢cd٣٢; width: ٠%; border-radius: ١٠px; transition: width ١s;}
-.confetti {position: absolute; width: ١٠px; height: ١٠px; animation: fall ٣s linear forwards;}
+body {font-family: Arial, sans-serif; background: linear-gradient(#87ceeb, #e0ffff); margin: 0; padding: 20px; color: #000000; text-align: center; font-size: 22px;}
+h1 {color: #000000; font-size: 50px;}
+h2 {color: #000000; font-size: 35px;}
+.door {background: #ffdd55; border: 5px solid #ff8000; border-radius: 20px; padding: 25px; margin: 15px; font-size: 28px; cursor: pointer; display: inline-block; width: 300px; color: #000000;}
+.door:hover {transform: scale(1.1); background: #ffd700;}
+.level {display: none; background: white; border-radius: 20px; padding: 40px; margin: 20px auto; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: #000000;}
+button {background: #32cd32; color: #000000; border: none; padding: 20px 40px; font-size: 26px; border-radius: 15px; margin: 15px; cursor: pointer;}
+.circle {width: 60px; height: 60px; background: red; border-radius: 50%; display: inline-block; margin: 10px; animation: pop 0.4s;}
+@keyframes pop {from {transform: scale(0);} to {transform: scale(1);}}
+.star {font-size: 55px; color: gold; animation: twinkle 0.8s infinite;}
+@keyframes twinkle {0%,100% {opacity: 1;} 50% {opacity: 0.3;}}
+#score {font-size: 32px; color: #000000; margin: 20px;}
+#progress {height: 25px; background: #32cd32; width: 0%; border-radius: 10px; transition: width 1s;}
 </style>
 </head>
 <body>
 
 <h1>بسم الله الرحمن الرحيم</h1>
-<h2>🌟 مغامرة الضرب في ثلاثة 🌟</h2>
+<h2>مغامرة الضرب في ثلاثة</h2>
 
 <div id="score">نقاطك: <span id="points">٠</span></div>
-<div style="width:٨٠%; margin:١٠px auto; background:#ddd; border-radius:١٠px;"><div id="progress"></div></div>
+<div style="width:80%; margin:15px auto; background:#ddd; border-radius:10px;"><div id="progress"></div></div>
 
 <div id="doors">
-<button class="door" onclick="startAdventure(١)">🪄 مغامرة الدوائر السحرية</button>
-<button class="door" onclick="startAdventure(٢)">🏰 قصر جدول الثلاثة</button>
-<button class="door" onclick="startAdventure(٣)">⛰️ جبل المقارنة</button>
-<button class="door" onclick="startAdventure(٤)">🌳 حديقة القصص الحقيقية</button>
-<button class="door" onclick="startAdventure(٥)">💎 الكنز النهائي</button>
+<button class="door" onclick="startAdventure(1)">مغامرة الدوائر السحرية</button>
+<button class="door" onclick="startAdventure(2)">قصر جدول الثلاثة</button>
+<button class="door" onclick="startAdventure(3)">جبل المقارنة</button>
+<button class="door" onclick="startAdventure(4)">حديقة القصص الحقيقية</button>
+<button class="door" onclick="startAdventure(5)">الكنز النهائي</button>
 </div>
 
 <div id="adv1" class="level">
@@ -41,12 +40,12 @@ button {background: #٣٢cd٣٢; color: white; border: none; padding: ١٥px ٣�
 <button onclick="addGroup()">اضف مجموعة جديدة</button>
 <button onclick="clearGroups()">امسح وابدأ من جديد</button>
 <div id="visual1"></div>
-<p id="eq1"></p>
+<p id="eq1" style="font-size:28px;"></p>
 </div>
 
 <div id="adv2" class="level">
 <h3>جدول الثلاثة الملون</h3>
-<table border="١" style="margin:auto; font-size:٢٥px;">
+<table border="1" style="margin:auto; font-size:28px; color:#000000;">
 <tr><td>١ × ٣</td><td>٣</td></tr>
 <tr><td>٢ × ٣</td><td>٦</td></tr>
 <tr><td>٣ × ٣</td><td>٩</td></tr>
@@ -54,53 +53,55 @@ button {background: #٣٢cd٣٢; color: white; border: none; padding: ١٥px ٣�
 <tr><td>٥ × ٣</td><td>١٥</td></tr>
 </table>
 <button onclick="showTableMagic()">اضغط لترى السحر</button>
-<div id="magic"></div>
+<div id="magic" style="font-size:26px; color:#000000;"></div>
 </div>
 
 <div id="adv3" class="level">
 <h3>اختر الاشارة الصحيحة</h3>
-<p id="q3"></p>
-<button onclick="checkCompare('=')"> = </button>
-<button onclick="checkCompare('>')"> > </button>
-<button onclick="checkCompare('<')"> < </button>
-<p id="fb3"></p>
+<p id="q3" style="font-size:30px;"></p>
+<button onclick="checkCompare('=')">=</button>
+<button onclick="checkCompare('>')">></button>
+<button onclick="checkCompare('<')"><</button>
+<p id="fb3" style="font-size:26px;"></p>
 </div>
 
 <div id="adv4" class="level">
 <h3>حديقة القصص من درسك</h3>
-<p>نوافذ المسجد</p>
+<p style="font-size:26px;">نوافذ المسجد</p>
 <button onclick="solveWindow()">احسب عدد النوافذ × ٣</button>
-<p id="res4"></p>
+<p id="res4" style="font-size:26px;"></p>
 <button onclick="solveMerchant()">مسألة التاجر اربع قصص</button>
 </div>
 
 <div id="adv5" class="level">
-<h3>الكنز النهائي - ١٠ تحديات</h3>
-<p id="finalQ"></p>
-<input id="finalAns" type="number" placeholder="اكتب الجواب">
+<h3>الكنز النهائي ١٠ تحديات</h3>
+<p id="finalQ" style="font-size:28px;"></p>
+<input id="finalAns" type="number" placeholder="اكتب الجواب" style="font-size:26px; padding:10px;">
 <button onclick="checkFinal()">تحقق</button>
-<p id="finalFb"></p>
+<p id="finalFb" style="font-size:26px;"></p>
 <div id="stars"></div>
 </div>
 
-<div id="certificate" class="level" style="display:none; background:gold; color:#٠٠٠;">
-<h3>مبروك يا بطل!</h3>
-<p>لقد تعلمت الضرب في ثلاثة بنجاح</p>
+<div id="certificate" class="level" style="display:none; background:gold; color:#000000;">
+<h3>مبروك يا بطل</h3>
+<p style="font-size:28px;">لقد تعلمت الضرب في ثلاثة بنجاح</p>
 <button onclick="printCertificate()">اطبع الشهادة</button>
 </div>
 
 <script>
-let points = ٠;
-let progress = ٠;
-let groups = ٠;
-let correctFinal = ٠;
-let finalCount = ٠;
+let points = 0;
+let progress = 0;
+let groups = 0;
+let correctFinal = 0;
+let finalCount = 0;
 
-const toArabic = (n) => n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+function toArabic(n) {
+return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
 
 function updateScore() {
 document.getElementById('points').innerText = toArabic(points);
-progress = Math.min(١٠٠, points / ٢);
+progress = Math.min(100, points / 2);
 document.getElementById('progress').style.width = progress + '%';
 }
 
@@ -111,18 +112,18 @@ const gain = ctx.createGain();
 osc.connect(gain);
 gain.connect(ctx.destination);
 if (type === 'correct') {
-osc.frequency.value = ٨٠٠;
+osc.frequency.value = 800;
 osc.type = 'sine';
-gain.gain.value = ٠.٨;
-setTimeout(() => gain.gain.value = ٠, ٢٠٠);
+gain.gain.value = 0.8;
+setTimeout(() => gain.gain.value = 0, 200);
 } else {
-osc.frequency.value = ٣٠٠;
+osc.frequency.value = 300;
 osc.type = 'sawtooth';
-gain.gain.value = ٠.٦;
-setTimeout(() => gain.gain.value = ٠, ٤٠٠);
+gain.gain.value = 0.6;
+setTimeout(() => gain.gain.value = 0, 400);
 }
 osc.start();
-setTimeout(() => osc.stop(), ٦٠٠);
+setTimeout(() => osc.stop(), 600);
 }
 
 function createStar() {
@@ -130,69 +131,64 @@ const star = document.createElement('div');
 star.className = 'star';
 star.innerText = '★';
 document.body.appendChild(star);
-setTimeout(() => star.remove(), ٣٠٠٠);
+setTimeout(() => star.remove(), 3000);
 }
 
 function startAdventure(n) {
 document.querySelectorAll('.level').forEach(l => l.style.display = 'none');
 document.getElementById('adv' + n).style.display = 'block';
-if (n === ٥) generateFinalQuestion();
+if (n === 5) generateFinalQuestion();
 }
 
 function addGroup() {
 groups++;
 const v = document.getElementById('visual1');
 v.innerHTML = '';
-for (let i = ٠; i < groups; i++) {
+for (let i = 0; i < groups; i++) {
 const g = document.createElement('div');
-for (let j = ٠; j < ٣; j++) {
+for (let j = 0; j < 3; j++) {
 const c = document.createElement('div');
 c.className = 'circle';
 g.appendChild(c);
 }
 v.appendChild(g);
 }
-document.getElementById('eq1').innerText = toArabic(groups) + ' × ٣ = ' + toArabic(groups * ٣);
-points += ٨;
+document.getElementById('eq1').innerText = toArabic(groups) + ' × ٣ = ' + toArabic(groups * 3);
+points += 8;
 updateScore();
 playSound('correct');
 createStar();
-if (groups >= ٥) {
-setTimeout(() => {
-document.getElementById('eq1').innerHTML += ' <span class="star">★</span> برافو يا بطل!';
-}, ٨٠٠);
+if (groups >= 5) {
+document.getElementById('eq1').innerHTML += ' برافو يا بطل!';
 }
 }
 
 function clearGroups() {
-groups = ٠;
+groups = 0;
 document.getElementById('visual1').innerHTML = '';
 document.getElementById('eq1').innerText = '';
 }
 
 function showTableMagic() {
-const m = document.getElementById('magic');
-m.innerHTML = 'انظر! كل سطر يطير ثلاث كرات سحرية 🌟';
+document.getElementById('magic').innerHTML = 'انظر كل سطر يطير ثلاث كرات سحرية';
 playSound('correct');
 createStar();
-points += ١٠;
+points += 10;
 updateScore();
 }
 
 let compareCorrect = '';
 function generateCompare() {
-const a = Math.floor(Math.random() * ٥) + ١;
-const left = a * ٣;
-const right = a * ٣;
+const a = Math.floor(Math.random() * 5) + 1;
 compareCorrect = '=';
-document.getElementById('q3').innerText = toArabic(left) + ' ○ ' + toArabic(right);
+document.getElementById('q3').innerText = toArabic(a * 3) + ' ○ ' + toArabic(a * 3);
 }
 function checkCompare(ans) {
 if (ans === compareCorrect) {
-document.getElementById('fb3').innerHTML = 'صحيح تماما! ★';
+document.getElementById('fb3').innerHTML = 'صحيح تماما';
 playSound('correct');
 createStar();
-points += ١٢;
+points += 12;
 updateScore();
 generateCompare();
 } else {
@@ -202,8 +198,8 @@ playSound('wrong');
 }
 
 function solveWindow() {
-document.getElementById('res4').innerText = 'عدد النوافذ في الصورة × ٣ = ١٥';
-points += ١٥;
+document.getElementById('res4').innerText = 'عدد النوافذ × ٣ = ١٥';
+points += 15;
 updateScore();
 playSound('correct');
 createStar();
@@ -211,15 +207,15 @@ createStar();
 
 function solveMerchant() {
 document.getElementById('res4').innerText = '٤ قصص × ٣ دنانير = ١٢ دينار';
-points += ١٥;
+points += 15;
 updateScore();
 playSound('correct');
 createStar();
 }
 
 function generateFinalQuestion() {
-const a = Math.floor(Math.random() * ٥) + ١;
-correctFinal = a * ٣;
+const a = Math.floor(Math.random() * 5) + 1;
+correctFinal = a * 3;
 document.getElementById('finalQ').innerText = 'كم هو ' + toArabic(a) + ' × ٣ ؟';
 document.getElementById('finalAns').value = '';
 document.getElementById('finalFb').innerText = '';
@@ -228,13 +224,13 @@ document.getElementById('finalFb').innerText = '';
 function checkFinal() {
 const ans = parseInt(document.getElementById('finalAns').value);
 if (ans === correctFinal) {
-document.getElementById('finalFb').innerHTML = 'صحيح يا اسطورة! ★';
+document.getElementById('finalFb').innerHTML = 'صحيح يا اسطورة';
 playSound('correct');
 createStar();
-points += ٢٠;
+points += 20;
 updateScore();
 finalCount++;
-if (finalCount >= ٨) {
+if (finalCount >= 8) {
 document.getElementById('certificate').style.display = 'block';
 }
 generateFinalQuestion();
