@@ -35,7 +35,7 @@ button.selected {background: #90ee90 !important;}
 <div id="doors">
 <button class="door" onclick="startAdventure(1)">مغامرة الدوائر السحرية</button>
 <button class="door" onclick="startAdventure(2)">قصر جدول الثلاثة</button>
-<button class="door" onclick="startAdventure(3)">جبل المقارنة</button>
+<button class="door" onclick="startAdventure(3)">جسر الضرب والجمع</button>
 <button class="door" onclick="startAdventure(4)">حديقة القصص الحقيقية</button>
 <button class="door" onclick="startAdventure(5)">الكنز النهائي</button>
 </div>
@@ -65,13 +65,18 @@ button.selected {background: #90ee90 !important;}
 </div>
 
 <div id="adv3" class="level">
-<h3>جبل المقارنة</h3>
-<p>قارن بين الضرب والجمع المتكرر</p>
-<p id="q3" style="font-size:32px; margin:30px 0;"></p>
-<button onclick="checkCompare('=')" style="font-size:30px; padding:15px 35px;">=</button>
-<button onclick="checkCompare('>')" style="font-size:30px; padding:15px 35px;">></button>
-<button onclick="checkCompare('<')" style="font-size:30px; padding:15px 35px;"><</button>
-<p id="fb3" style="font-size:28px; margin-top:30px;"></p>
+<h3>جسر الضرب والجمع</h3>
+<p>اضغط على اي سطر لترى الضرب يساوي الجمع المتكرر</p>
+
+<table border="1" style="margin:auto; font-size:28px; color:#000000; border-collapse:collapse; width:70%;">
+<tr><td><button onclick="showLink(1)" id="link1" style="background:none; border:none; font-size:28px; cursor:pointer; color:#000; width:100%; text-align:right;">١ × ٣ = ؟</button></td></tr>
+<tr><td><button onclick="showLink(2)" id="link2" style="background:none; border:none; font-size:28px; cursor:pointer; color:#000; width:100%; text-align:right;">٢ × ٣ = ؟</button></td></tr>
+<tr><td><button onclick="showLink(3)" id="link3" style="background:none; border:none; font-size:28px; cursor:pointer; color:#000; width:100%; text-align:right;">٣ × ٣ = ؟</button></td></tr>
+<tr><td><button onclick="showLink(4)" id="link4" style="background:none; border:none; font-size:28px; cursor:pointer; color:#000; width:100%; text-align:right;">٤ × ٣ = ؟</button></td></tr>
+<tr><td><button onclick="showLink(5)" id="link5" style="background:none; border:none; font-size:28px; cursor:pointer; color:#000; width:100%; text-align:right;">٥ × ٣ = ؟</button></td></tr>
+</table>
+
+<div id="linkResult" style="font-size:26px; margin-top:40px; min-height:200px; color:#000;"></div>
 </div>
 
 <div id="adv4" class="level">
@@ -123,7 +128,6 @@ let groups = 0;
 let selectedRow = 0;
 let correctFinal = 0;
 let finalCount = 0;
-let correctSign = '';
 
 const praises = [
 "برافو يا بطل",
@@ -192,7 +196,6 @@ setTimeout(() => conf.remove(), 4000);
 function startAdventure(n) {
 document.querySelectorAll('.level').forEach(l => l.style.display = 'none');
 document.getElementById('adv' + n).style.display = 'block';
-if (n === 3) generateCompare();
 if (n === 5) generateFinalQuestion();
 }
 
@@ -261,29 +264,41 @@ updateScore();
 document.getElementById('row' + selectedRow).innerText = toArabic(selectedRow) + ' × ٣ = ' + toArabic(result);
 }
 
-function generateCompare() {
-const numGroups = Math.floor(Math.random() * 5) + 1;
-const extra = Math.floor(Math.random() * 3) - 1;
-const left = numGroups * 3;
-const right = (numGroups + extra) * 3;
-document.getElementById('q3').innerText = toArabic(left) + '   ○   ' + toArabic(right);
-correctSign = left > right ? '>' : left < right ? '<' : '=';
-}
+function showLink(num) {
+  const res = document.getElementById('linkResult');
+  res.innerHTML = '';
 
-function checkCompare(ans) {
-if (ans === correctSign) {
-const randomPraise = praises[Math.floor(Math.random() * praises.length)];
-document.getElementById('fb3').innerHTML = randomPraise + ' صح تماما';
-playSound('correct');
-createStar();
-launchConfetti();
-points += 12;
-updateScore();
-generateCompare();
-} else {
-document.getElementById('fb3').innerText = 'حاول مرة اخرى';
-playSound('wrong');
-}
+  let addition = '';
+  for (let i = 0; i < num; i++) {
+    addition += '٣';
+    if (i < num - 1) addition += ' + ';
+  }
+
+  res.innerHTML = toArabic(num) + ' × ٣ = ' + toArabic(num * 3) + '<br>';
+  res.innerHTML += addition + ' = ' + toArabic(num * 3) + '<br>';
+
+  for (let i = 0; i < num; i++) {
+    const group = document.createElement('div');
+    group.style.display = 'inline-block';
+    for (let j = 0; j < 3; j++) {
+      const c = document.createElement('div');
+      c.className = 'circle';
+      c.style.background = '#ff4500';
+      c.style.margin = '5px';
+      group.appendChild(c);
+    }
+    res.appendChild(group);
+  }
+
+  const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+  res.innerHTML += '<br>' + randomPraise;
+
+  playSound('correct');
+  createStar();
+  launchConfetti();
+
+  points += 12;
+  updateScore();
 }
 
 function solveStory(type) {
@@ -357,7 +372,6 @@ window.print();
 
 window.onload = () => {
 updateScore();
-generateCompare();
 };
 </script>
 </body>
