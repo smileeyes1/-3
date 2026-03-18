@@ -11,18 +11,21 @@ h2 {color: #000000; font-size: 35px;}
 .door:hover {transform: scale(1.1); background: #ffd700;}
 .level {display: none; background: white; border-radius: 20px; padding: 40px; margin: 20px auto; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: #000000;}
 button {background: #32cd32; color: #000000; border: none; padding: 20px 40px; font-size: 26px; border-radius: 15px; margin: 15px; cursor: pointer;}
-.circle {width: 60px; height: 60px; background: red; border-radius: 50%; display: inline-block; margin: 10px; animation: pop 0.4s;}
-@keyframes pop {from {transform: scale(0);} to {transform: scale(1);}}
+.circle {width: 60px; height: 60px; background: red; border-radius: 50%; display: inline-block; margin: 10px; animation: fly 1.5s forwards;}
+@keyframes fly {0% {transform: translateY(0) scale(0.5);} 50% {transform: translateY(-80px) scale(1.2);} 100% {transform: translateY(-150px) scale(0.8); opacity: 0;}}
 .star {font-size: 55px; color: gold; animation: twinkle 0.8s infinite;}
 @keyframes twinkle {0%,100% {opacity: 1;} 50% {opacity: 0.3;}}
 #score {font-size: 32px; color: #000000; margin: 20px;}
 #progress {height: 25px; background: #32cd32; width: 0%; border-radius: 10px; transition: width 1s;}
+.confetti {position: absolute; width: 12px; height: 12px; border-radius: 50%; animation: confettiFall 3s linear forwards;}
+@keyframes confettiFall {0% {transform: translateY(-100px) rotate(0deg);} 100% {transform: translateY(800px) rotate(720deg); opacity: 0;}}
 </style>
 </head>
 <body>
 
 <h1>بسم الله الرحمن الرحيم</h1>
 <h2>مغامرة الضرب في ثلاثة</h2>
+<p style="font-size:24px; color:#000000;">اعداد محمد وجيه<br>مدرسة عاطوف المختلطة</p>
 
 <div id="score">نقاطك: <span id="points">٠</span></div>
 <div style="width:80%; margin:15px auto; background:#ddd; border-radius:10px;"><div id="progress"></div></div>
@@ -53,7 +56,7 @@ button {background: #32cd32; color: #000000; border: none; padding: 20px 40px; f
 <tr><td>٥ × ٣</td><td>١٥</td></tr>
 </table>
 <button onclick="showTableMagic()">اضغط لترى السحر</button>
-<div id="magic" style="font-size:26px; color:#000000;"></div>
+<div id="magic" style="font-size:26px; color:#000000; margin-top:20px;"></div>
 </div>
 
 <div id="adv3" class="level">
@@ -95,6 +98,16 @@ let groups = 0;
 let correctFinal = 0;
 let finalCount = 0;
 
+const praises = [
+"برافو يا بطل",
+"احسنت يا اسطورة",
+"ممتاز يا نجم",
+"يا بطل الرياضيات",
+"رائع جدا",
+"انت عبقري",
+"مبروك يا بطل"
+];
+
 function toArabic(n) {
 return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 }
@@ -134,6 +147,18 @@ document.body.appendChild(star);
 setTimeout(() => star.remove(), 3000);
 }
 
+function launchConfetti() {
+for (let i = 0; i < 50; i++) {
+const conf = document.createElement('div');
+conf.className = 'confetti';
+conf.style.left = Math.random() * 100 + 'vw';
+conf.style.background = ['#ff0000','#ffff00','#00ff00','#0000ff'][Math.floor(Math.random()*4)];
+conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
+document.body.appendChild(conf);
+setTimeout(() => conf.remove(), 4000);
+}
+}
+
 function startAdventure(n) {
 document.querySelectorAll('.level').forEach(l => l.style.display = 'none');
 document.getElementById('adv' + n).style.display = 'block';
@@ -158,6 +183,7 @@ points += 8;
 updateScore();
 playSound('correct');
 createStar();
+launchConfetti();
 if (groups >= 5) {
 document.getElementById('eq1').innerHTML += ' برافو يا بطل!';
 }
@@ -170,9 +196,18 @@ document.getElementById('eq1').innerText = '';
 }
 
 function showTableMagic() {
-document.getElementById('magic').innerHTML = 'انظر كل سطر يطير ثلاث كرات سحرية';
+const m = document.getElementById('magic');
+m.innerHTML = 'انظر كل سطر يطير ثلاث كرات سحرية';
+for (let i = 0; i < 3; i++) {
+const flying = document.createElement('div');
+flying.className = 'circle';
+flying.style.background = '#ff4500';
+flying.style.margin = '10px';
+m.appendChild(flying);
+}
 playSound('correct');
 createStar();
+launchConfetti();
 points += 10;
 updateScore();
 }
@@ -185,9 +220,11 @@ document.getElementById('q3').innerText = toArabic(a * 3) + ' ○ ' + toArabic(a
 }
 function checkCompare(ans) {
 if (ans === compareCorrect) {
-document.getElementById('fb3').innerHTML = 'صحيح تماما';
+const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+document.getElementById('fb3').innerHTML = randomPraise;
 playSound('correct');
 createStar();
+launchConfetti();
 points += 12;
 updateScore();
 generateCompare();
@@ -199,18 +236,24 @@ playSound('wrong');
 
 function solveWindow() {
 document.getElementById('res4').innerText = 'عدد النوافذ × ٣ = ١٥';
+const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+document.getElementById('res4').innerHTML += '<br>' + randomPraise;
 points += 15;
 updateScore();
 playSound('correct');
 createStar();
+launchConfetti();
 }
 
 function solveMerchant() {
 document.getElementById('res4').innerText = '٤ قصص × ٣ دنانير = ١٢ دينار';
+const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+document.getElementById('res4').innerHTML += '<br>' + randomPraise;
 points += 15;
 updateScore();
 playSound('correct');
 createStar();
+launchConfetti();
 }
 
 function generateFinalQuestion() {
@@ -224,9 +267,11 @@ document.getElementById('finalFb').innerText = '';
 function checkFinal() {
 const ans = parseInt(document.getElementById('finalAns').value);
 if (ans === correctFinal) {
-document.getElementById('finalFb').innerHTML = 'صحيح يا اسطورة';
+const randomPraise = praises[Math.floor(Math.random() * praises.length)];
+document.getElementById('finalFb').innerHTML = randomPraise;
 playSound('correct');
 createStar();
+launchConfetti();
 points += 20;
 updateScore();
 finalCount++;
