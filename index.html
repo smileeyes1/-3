@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مغامرة الضرب في ثلاثة</title>
+<style>
+body {font-family: Arial, sans-serif; background: linear-gradient(#٨٧ceeb, #e٠ffff); margin: ٠; padding: ٢٠px; color: #٠٠٣٣٠٠; text-align: center;}
+h1 {color: #٠٠٨٠٠٠; font-size: ٤٠px;}
+h2 {color: #d٢٦٩١e; font-size: ٣٠px;}
+.door {background: #ffdd٥٥; border: ٥px solid #ff٨٠٠٠; border-radius: ٢٠px; padding: ٢٠px; margin: ١٥px; font-size: ٢٥px; cursor: pointer; display: inline-block; width: ٢٨٠px;}
+.door:hover {transform: scale(١.١); background: #ffd٧٠٠;}
+.level {display: none; background: white; border-radius: ٢٠px; padding: ٣٠px; margin: ٢٠px auto; max-width: ٨٠٠px; box-shadow: ٠ ١٠px ٣٠px rgba(٠,٠,٠,٠.١);}
+button {background: #٣٢cd٣٢; color: white; border: none; padding: ١٥px ٣٠px; font-size: ٢٢px; border-radius: ١٥px; margin: ١٠px; cursor: pointer;}
+.circle {width: ٥٠px; height: ٥٠px; background: red; border-radius: ٥٠%; display: inline-block; margin: ٨px; animation: pop ٠.٤s;}
+@keyframes pop {from {transform: scale(٠);} to {transform: scale(١);}}
+.star {font-size: ٥٠px; color: gold; animation: twinkle ٠.٨s infinite;}
+@keyframes twinkle {٠%,١٠٠% {opacity: ١;} ٥٠% {opacity: ٠.٣;}}
+#score {font-size: ٣٠px; color: #d٢٦٩١e; margin: ١٥px;}
+#progress {height: ٢٠px; background: #٣٢cd٣٢; width: ٠%; border-radius: ١٠px; transition: width ١s;}
+.confetti {position: absolute; width: ١٠px; height: ١٠px; animation: fall ٣s linear forwards;}
+</style>
+</head>
+<body>
+
+<h1>بسم الله الرحمن الرحيم</h1>
+<h2>🌟 مغامرة الضرب في ثلاثة 🌟</h2>
+
+<div id="score">نقاطك: <span id="points">٠</span></div>
+<div style="width:٨٠%; margin:١٠px auto; background:#ddd; border-radius:١٠px;"><div id="progress"></div></div>
+
+<div id="doors">
+<button class="door" onclick="startAdventure(١)">🪄 مغامرة الدوائر السحرية</button>
+<button class="door" onclick="startAdventure(٢)">🏰 قصر جدول الثلاثة</button>
+<button class="door" onclick="startAdventure(٣)">⛰️ جبل المقارنة</button>
+<button class="door" onclick="startAdventure(٤)">🌳 حديقة القصص الحقيقية</button>
+<button class="door" onclick="startAdventure(٥)">💎 الكنز النهائي</button>
+</div>
+
+<div id="adv1" class="level">
+<h3>اضف مجموعات وشاهد الضرب يحدث سحريا</h3>
+<button onclick="addGroup()">اضف مجموعة جديدة</button>
+<button onclick="clearGroups()">امسح وابدأ من جديد</button>
+<div id="visual1"></div>
+<p id="eq1"></p>
+</div>
+
+<div id="adv2" class="level">
+<h3>جدول الثلاثة الملون</h3>
+<table border="١" style="margin:auto; font-size:٢٥px;">
+<tr><td>١ × ٣</td><td>٣</td></tr>
+<tr><td>٢ × ٣</td><td>٦</td></tr>
+<tr><td>٣ × ٣</td><td>٩</td></tr>
+<tr><td>٤ × ٣</td><td>١٢</td></tr>
+<tr><td>٥ × ٣</td><td>١٥</td></tr>
+</table>
+<button onclick="showTableMagic()">اضغط لترى السحر</button>
+<div id="magic"></div>
+</div>
+
+<div id="adv3" class="level">
+<h3>اختر الاشارة الصحيحة</h3>
+<p id="q3"></p>
+<button onclick="checkCompare('=')"> = </button>
+<button onclick="checkCompare('>')"> > </button>
+<button onclick="checkCompare('<')"> < </button>
+<p id="fb3"></p>
+</div>
+
+<div id="adv4" class="level">
+<h3>حديقة القصص من درسك</h3>
+<p>نوافذ المسجد</p>
+<button onclick="solveWindow()">احسب عدد النوافذ × ٣</button>
+<p id="res4"></p>
+<button onclick="solveMerchant()">مسألة التاجر اربع قصص</button>
+</div>
+
+<div id="adv5" class="level">
+<h3>الكنز النهائي - ١٠ تحديات</h3>
+<p id="finalQ"></p>
+<input id="finalAns" type="number" placeholder="اكتب الجواب">
+<button onclick="checkFinal()">تحقق</button>
+<p id="finalFb"></p>
+<div id="stars"></div>
+</div>
+
+<div id="certificate" class="level" style="display:none; background:gold; color:#٠٠٠;">
+<h3>مبروك يا بطل!</h3>
+<p>لقد تعلمت الضرب في ثلاثة بنجاح</p>
+<button onclick="printCertificate()">اطبع الشهادة</button>
+</div>
+
+<script>
+let points = ٠;
+let progress = ٠;
+let groups = ٠;
+let correctFinal = ٠;
+let finalCount = ٠;
+
+const toArabic = (n) => n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+function updateScore() {
+document.getElementById('points').innerText = toArabic(points);
+progress = Math.min(١٠٠, points / ٢);
+document.getElementById('progress').style.width = progress + '%';
+}
+
+function playSound(type) {
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = ctx.createOscillator();
+const gain = ctx.createGain();
+osc.connect(gain);
+gain.connect(ctx.destination);
+if (type === 'correct') {
+osc.frequency.value = ٨٠٠;
+osc.type = 'sine';
+gain.gain.value = ٠.٨;
+setTimeout(() => gain.gain.value = ٠, ٢٠٠);
+} else {
+osc.frequency.value = ٣٠٠;
+osc.type = 'sawtooth';
+gain.gain.value = ٠.٦;
+setTimeout(() => gain.gain.value = ٠, ٤٠٠);
+}
+osc.start();
+setTimeout(() => osc.stop(), ٦٠٠);
+}
+
+function createStar() {
+const star = document.createElement('div');
+star.className = 'star';
+star.innerText = '★';
+document.body.appendChild(star);
+setTimeout(() => star.remove(), ٣٠٠٠);
+}
+
+function startAdventure(n) {
+document.querySelectorAll('.level').forEach(l => l.style.display = 'none');
+document.getElementById('adv' + n).style.display = 'block';
+if (n === ٥) generateFinalQuestion();
+}
+
+function addGroup() {
+groups++;
+const v = document.getElementById('visual1');
+v.innerHTML = '';
+for (let i = ٠; i < groups; i++) {
+const g = document.createElement('div');
+for (let j = ٠; j < ٣; j++) {
+const c = document.createElement('div');
+c.className = 'circle';
+g.appendChild(c);
+}
+v.appendChild(g);
+}
+document.getElementById('eq1').innerText = toArabic(groups) + ' × ٣ = ' + toArabic(groups * ٣);
+points += ٨;
+updateScore();
+playSound('correct');
+createStar();
+if (groups >= ٥) {
+setTimeout(() => {
+document.getElementById('eq1').innerHTML += ' <span class="star">★</span> برافو يا بطل!';
+}, ٨٠٠);
+}
+}
+
+function clearGroups() {
+groups = ٠;
+document.getElementById('visual1').innerHTML = '';
+document.getElementById('eq1').innerText = '';
+}
+
+function showTableMagic() {
+const m = document.getElementById('magic');
+m.innerHTML = 'انظر! كل سطر يطير ثلاث كرات سحرية 🌟';
+playSound('correct');
+createStar();
+points += ١٠;
+updateScore();
+}
+
+let compareCorrect = '';
+function generateCompare() {
+const a = Math.floor(Math.random() * ٥) + ١;
+const left = a * ٣;
+const right = a * ٣;
+compareCorrect = '=';
+document.getElementById('q3').innerText = toArabic(left) + ' ○ ' + toArabic(right);
+}
+function checkCompare(ans) {
+if (ans === compareCorrect) {
+document.getElementById('fb3').innerHTML = 'صحيح تماما! ★';
+playSound('correct');
+createStar();
+points += ١٢;
+updateScore();
+generateCompare();
+} else {
+document.getElementById('fb3').innerText = 'حاول مرة اخرى';
+playSound('wrong');
+}
+}
+
+function solveWindow() {
+document.getElementById('res4').innerText = 'عدد النوافذ في الصورة × ٣ = ١٥';
+points += ١٥;
+updateScore();
+playSound('correct');
+createStar();
+}
+
+function solveMerchant() {
+document.getElementById('res4').innerText = '٤ قصص × ٣ دنانير = ١٢ دينار';
+points += ١٥;
+updateScore();
+playSound('correct');
+createStar();
+}
+
+function generateFinalQuestion() {
+const a = Math.floor(Math.random() * ٥) + ١;
+correctFinal = a * ٣;
+document.getElementById('finalQ').innerText = 'كم هو ' + toArabic(a) + ' × ٣ ؟';
+document.getElementById('finalAns').value = '';
+document.getElementById('finalFb').innerText = '';
+}
+
+function checkFinal() {
+const ans = parseInt(document.getElementById('finalAns').value);
+if (ans === correctFinal) {
+document.getElementById('finalFb').innerHTML = 'صحيح يا اسطورة! ★';
+playSound('correct');
+createStar();
+points += ٢٠;
+updateScore();
+finalCount++;
+if (finalCount >= ٨) {
+document.getElementById('certificate').style.display = 'block';
+}
+generateFinalQuestion();
+} else {
+document.getElementById('finalFb').innerText = 'قريب حاول تاني';
+playSound('wrong');
+}
+}
+
+function printCertificate() {
+window.print();
+}
+
+window.onload = () => {
+updateScore();
+generateCompare();
+};
+</script>
+</body>
+</html>
